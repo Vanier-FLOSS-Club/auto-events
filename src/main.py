@@ -38,9 +38,12 @@ def format_link_data():
 
 
 if __name__ == "__main__":
+    github_token = os.getenv("GITHUB_TOKEN", "")
+
     issues = get_github_issues(
         owner=REPO_OWNER,
         repo=REPO_NAME,
+        token=github_token
     )
 
     type_list = [issue.to_dict() for issue in issues]
