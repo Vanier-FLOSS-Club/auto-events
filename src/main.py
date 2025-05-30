@@ -1,12 +1,46 @@
 import os
+import re
+
 from src.request import get_github_issues
-import json
+
+# Repository information for the GitHub API.
+REPO_OWNER = "Vanier-FLOSS-Club"
+REPO_NAME = "auto-events"
+
+
+def clean_desc(body: str) -> str:
+    body = re.sub(r"(?i)^.*deadline:\s*\d{4}-\d{2}-\d{2}.*\n?", "", body, flags=re.MULTILINE).strip()
+    body = body.replace("\\", "\\\\").replace('"', '\\"').replace("\n", "\\n")
+    return body
+
+
+def format_event(event):
+    return f'''      {{
+        name: "{event['name']}",
+        desc: "{clean_desc(event['desc'])}",
+        time: "{event['time']}"
+      }}'''
+
+
+def format_link_data():
+    formatted = "// Upcoming events data\nconst linkData = [\n"
+    for group in link_data:
+        formatted += f'''  {{
+    type: "{group['type']}",
+    typeName: "{group['typeName']}",
+    typeDesc: "{group['typeDesc']}",
+    typeList: [
+{",\n".join(format_event(e) for e in group['typeList'])}
+    ]
+  }}'''
+    formatted += "\n];\n\nexport default linkData;\n"
+    return formatted
+
 
 if __name__ == "__main__":
     issues = get_github_issues(
-        owner="Vanier-FLOSS-Club",
-        repo="auto-events",
-        token="", # GitHub Token
+        owner=REPO_OWNER,
+        repo=REPO_NAME,
     )
 
     type_list = [issue.to_dict() for issue in issues]
@@ -19,32 +53,7 @@ if __name__ == "__main__":
             "typeList": type_list
         }
     ]
-    def clean_desc(body: str) -> str:
-        import re
-        body = re.sub(r"(?i)^.*deadline:\s*\d{4}-\d{2}-\d{2}.*\n?", "", body, flags=re.MULTILINE).strip()
-        body = body.replace("\\", "\\\\").replace('"', '\\"').replace("\n", "\\n")
-        return body
 
-    def format_event(event):
-        return f'''      {{
-        name: "{event['name']}",
-        desc: "{clean_desc(event['desc'])}",
-        time: "{event['time']}"
-      }}'''
-
-    def format_link_data():
-        formatted = "// Upcoming events data\nconst linkData = [\n"
-        for group in link_data:
-            formatted += f'''  {{
-    type: "{group['type']}",
-    typeName: "{group['typeName']}",
-    typeDesc: "{group['typeDesc']}",
-    typeList: [
-{",\n".join(format_event(e) for e in group['typeList'])}
-    ]
-  }}'''
-        formatted += "\n];\n\nexport default linkData;\n"
-        return formatted
     output_path = r"output/eventData.mjs"
 
     # Cleanup the output directory before writing
