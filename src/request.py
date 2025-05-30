@@ -12,7 +12,7 @@ def get_github_issues(owner, repo, token=None, label=None, state="all", per_page
         headers["Authorization"] = f"token {token}"
 
     params = {
-        "state": state,
+        "state": "open",
         "per_page": per_page,
     }
     if label:
@@ -25,5 +25,5 @@ def get_github_issues(owner, repo, token=None, label=None, state="all", per_page
         issues = [Issue(item) for item in raw_data if "pull_request" not in item]
         return issues
     else:
-        print("请求失败:", response.status_code, response.text)
+        print("Fail to Request:", response.status_code, response.text)
         return []

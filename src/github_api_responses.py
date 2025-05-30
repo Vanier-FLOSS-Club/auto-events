@@ -1,3 +1,4 @@
+import re
 from datetime import datetime, timezone
 from typing import List, Optional
 
@@ -6,6 +7,13 @@ class Label:
         self.id: int = data.get("id", 0)
         self.name: str = data.get("name", "")
         self.description: str = data.get("description", "")
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "description": self.description
+        }
 
 class Issue:
     def __init__(self, data: dict):
@@ -36,3 +44,17 @@ class Issue:
     def updated_at(self) -> datetime:
         # Returns the updated_at date as a UTC datetime object。
         return datetime.fromisoformat(self.updated_at_raw.replace("Z", "+00:00")).astimezone(timezone.utc)
+
+    def get_due_date(self):
+        # Get the due date from the body text, if available.
+        match = re.search(r'Date:\s*(\d{4}-\d{2}-\d{2})', self.body)
+        if match:
+            return match.group(1)  # 返回字符串，也可以转成 datetime
+        return None
+
+    def to_dict(self):
+        return {
+            "name": self.title,
+            "desc": self.body,
+            "time": self.get_due_date(),
+        }
