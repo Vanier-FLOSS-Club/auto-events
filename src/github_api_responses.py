@@ -2,6 +2,7 @@ import re
 from datetime import datetime, timezone
 from typing import List, Optional
 
+
 class Label:
     def __init__(self, data: dict):
         self.id: int = data.get("id", 0)
@@ -14,6 +15,7 @@ class Label:
             "name": self.name,
             "description": self.description
         }
+
 
 class Issue:
     def __init__(self, data: dict):
