@@ -1,3 +1,4 @@
+import os
 from src.request import get_github_issues
 import json
 
@@ -44,8 +45,12 @@ if __name__ == "__main__":
   }}'''
         formatted += "\n];\n\nexport default linkData;\n"
         return formatted
+    output_path = r"output/eventData.mjs"
 
-    output_path = r"C:\Users\CnFig\OneDrive\文档\GitHub\FLOSS\Website\.vitepress\theme\assets\eventData.mjs"
+    # Cleanup the output directory before writing
+    if os.path.exists(os.path.dirname(output_path)):
+        os.removedirs(os.path.dirname(output_path))
+    os.makedirs(os.path.dirname(output_path))
 
     with open(output_path, "w", encoding="utf-8") as f:
         f.write(format_link_data())
