@@ -28,7 +28,6 @@ body:
       placeholder: "e.g., 2025-10-15, 14:00"
     validations:
       required: true
-      pattern: '^\d{4}-\d{2}-\d{2}, \d{2}:\d{2}$'
 
   - type: textarea
     id: organizers
@@ -43,7 +42,7 @@ body:
     attributes:
       label: Event location
       description: The location of the event
-      placeholder: "e.g., Vanier College, STEM Centre"
+      placeholder: "e.g., STEM Centre"
     validations:
       required: false
 
@@ -52,7 +51,6 @@ body:
     attributes:
       label: Additional information
       description: Any additional information about the event
-      placeholder: "e.g., Bring your own laptop, snacks provided..."
     validations:
       required: false
 
@@ -60,14 +58,14 @@ body:
     id: event-info
     attributes:
       label: Event Information JSON
-      description: Provide all necessary information about the event detail, note that time MUST be in ISO 8601 timestamp . PLEASE DO NOT CHANGE THE JSON STRUCTURE AND DO NOT TOUCH THE COMMENTS.
+      description: Provide all necessary information about the event detail, note that time MUST be in ISO 8601 timestamp. PLEASE DO NOT CHANGE THE JSON STRUCTURE AND DO NOT TOUCH THE COMMENTS.
       value: |
         <!-- START -->
         ```json
         {
-          name: "",
-          desc: "",
-          time: "",
+          "name": "",
+          "desc": "",
+          "time": ""
         }
         ```
         <!-- END -->
