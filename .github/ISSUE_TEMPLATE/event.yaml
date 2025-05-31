@@ -21,7 +21,7 @@ body:
       required: true
 
   - type: input
-    id: date & time
+    id: date_time
     attributes:
       label: Event date and time
       description: The date of the event in "YYYY-MM-DD, HH:MM" format
@@ -74,7 +74,7 @@ body:
     validations:
       required: false
 
-  - type: checkbox
+  - type: checkboxes
     id: checks
     attributes:
       label: Checklist
