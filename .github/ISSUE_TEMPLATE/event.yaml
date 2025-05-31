@@ -28,7 +28,7 @@ body:
       placeholder: "e.g., 2025-10-15 14:00"
     validations:
       required: true
-      pattern: "^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$"
+      pattern: '^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$'
 
   - type: textarea
     id: organizers
