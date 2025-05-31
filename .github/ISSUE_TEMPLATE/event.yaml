@@ -25,10 +25,10 @@ body:
     attributes:
       label: Event date and time
       description: The date of the event in "YYYY-MM-DD, HH:MM" format
-      placeholder: "e.g., 2025-10-15 14:00"
+      placeholder: "e.g., 2025-10-15, 14:00"
     validations:
       required: true
-      pattern: '^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$'
+      pattern: '^\d{4}-\d{2}-\d{2}, \d{2}:\d{2}$'
 
   - type: textarea
     id: organizers
@@ -38,7 +38,7 @@ body:
     validations:
       required: false
 
-  - type: textarea
+  - type: input
     id: location
     attributes:
       label: Event location
@@ -72,7 +72,7 @@ body:
         ```
         <!-- END -->
     validations:
-      required: false
+      required: true
 
   - type: checkboxes
     id: checks
