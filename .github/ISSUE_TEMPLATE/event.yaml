@@ -1,0 +1,90 @@
+name: Event Creation
+description: Create the next Vanier FLOSS event
+assignees: []
+body:
+  - type: input
+    id: title
+    attributes:
+      label: Event title
+      description: The title of the event
+      placeholder: "e.g., Vanier FLOSS Day"
+    validations:
+      required: true
+
+  - type: input
+    id: description
+    attributes:
+      label: Event description
+      description: A brief description of the event
+      placeholder: "e.g., Join us for a day of open-source fun and learning!"
+    validations:
+      required: true
+
+  - type: input
+    id: date & time
+    attributes:
+      label: Event date and time
+      description: The date of the event in "YYYY-MM-DD, HH:MM" format
+      placeholder: "e.g., 2025-10-15 14:00"
+    validations:
+      required: true
+      pattern: "^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$"
+
+  - type: textarea
+    id: organizers
+    attributes:
+      label: Event organizers
+      description: List the organizers of the event
+    validations:
+      required: false
+
+  - type: textarea
+    id: location
+    attributes:
+      label: Event location
+      description: The location of the event
+      placeholder: "e.g., Vanier College, STEM Centre"
+    validations:
+      required: false
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Additional information
+      description: Any additional information about the event
+      placeholder: "e.g., Bring your own laptop, snacks provided..."
+    validations:
+      required: false
+
+  - type: textarea
+    id: event-info
+    attributes:
+      label: Event Information JSON
+      description: Provide all necessary information about the event detail, note that time MUST be in ISO 8601 timestamp . PLEASE DO NOT CHANGE THE JSON STRUCTURE AND DO NOT TOUCH THE COMMENTS.
+      value: |
+        <!-- START -->
+        ```json
+        {
+          name: "",
+          desc: "",
+          time: "",
+        }
+        ```
+        <!-- END -->
+    validations:
+      required: false
+
+  - type: checkbox
+    id: checks
+    attributes:
+      label: Checklist
+      description: Please ensure that all items are checked before submitting.
+      options:
+        - required: true
+          label: "Event title is provided"
+        - required: true
+          label: "Event description is provided"
+        - required: true
+          label: "Event date and time is provided"
+        - required:  true
+          label: "JSON structure is correct"
