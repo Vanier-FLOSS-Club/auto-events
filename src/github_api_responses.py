@@ -30,15 +30,6 @@ class Issue:
         self.created_at_raw: str = data.get("created_at", "")
         self.updated_at_raw: str = data.get("updated_at", "")
 
-    def closed_at(self) -> Optional[datetime]:
-        # Returns the closed_at date as a UTC datetime object, or None if not closed。
-        if self.closed_at_raw:
-            try:
-                return datetime.fromisoformat(self.closed_at_raw.replace("Z", "+00:00")).astimezone(timezone.utc)
-            except ValueError:
-                pass
-        return None
-
     def to_dict(self):
         body = self.body
 
@@ -47,13 +38,18 @@ class Issue:
         json_start = "```json"
         json_end = "```"
 
+        # Find the start and end markers in the body
         start_index = body.find(start)
         end_index = body.find(end)
 
+        # Check if both markers are found
         if start_index != -1 and end_index != -1:
+
+            # If the markers are found, check for JSON markers
             json_start_index = body.find(json_start)
             json_end_index = body.find(json_end, json_start_index + len(json_start))
 
+            # Extract the JSON part if both JSON markers are found
             if json_start_index != -1 and json_end_index != -1:
                 body = body[json_start_index + len(json_start):json_end_index].strip()
                 try:
@@ -66,4 +62,5 @@ class Issue:
         else:
             print("Missing Start or End markers in the body.")
 
+        # If no JSON part is found, return an empty dictionary
         return {}

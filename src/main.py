@@ -22,8 +22,10 @@ if __name__ == "__main__":
 
     # Filter out issues that do not have the required JSON format in the body
     type_list = [issue.to_dict() for issue in issues]
+    # Sort the issues by the "time" field if it exists
     type_list = sorted(type_list, key=lambda x: x.get("time", ""))
 
+    # Format the data into the required structure
     link_data = [
         {
             "type": "events",
@@ -35,6 +37,7 @@ if __name__ == "__main__":
 
     output_path = r"output/eventData.json"
 
+    # Ensure the output directory
     if os.path.exists(os.path.dirname(output_path)):
         shutil.rmtree(os.path.dirname(output_path))
     os.makedirs(os.path.dirname(output_path))
