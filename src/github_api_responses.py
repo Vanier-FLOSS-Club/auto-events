@@ -1,15 +1,22 @@
 import json
-from datetime import datetime, timezone
 from typing import List, Optional
 
 
 class Label:
     def __init__(self, data: dict):
+        """
+        Initializes a Label object with the provided data.
+        :param data: A dictionary containing label data
+        """
         self.id: int = data.get("id", 0)
         self.name: str = data.get("name", "")
         self.description: str = data.get("description", "")
 
     def to_dict(self):
+        """
+        Converts the Label object to a dictionary representation.
+        :return: A dictionary containing the label's id, name, and description
+        """
         return {
             "id": self.id,
             "name": self.name,
@@ -19,6 +26,10 @@ class Label:
 
 class Issue:
     def __init__(self, data: dict):
+        """
+        Initializes an Issue object with the provided data.
+        :param data: A dictionary containing issue data
+        """
         self.id: int = data.get("id", 0)
         self.url: str = data.get("url", "")
         self.number: int = data.get("number", 0)
@@ -31,6 +42,10 @@ class Issue:
         self.updated_at_raw: str = data.get("updated_at", "")
 
     def to_dict(self):
+        """
+        Converts the Issue object directly to a JSON-compatible dictionary representation.
+        :return: A dictionary containing the issue's JSON data.
+        """
         body = self.body
 
         start = "<!-- START -->"

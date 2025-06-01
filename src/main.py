@@ -8,6 +8,10 @@ REPO_OWNER = "Vanier-FLOSS-Club"
 REPO_NAME = "auto-events"
 
 def format_link_data():
+    """
+    Formats the link data into a JSON string.
+    :return: JSON string of the link data
+    """
     return json.dumps(link_data, ensure_ascii=False, indent=2)
 
 if __name__ == "__main__":
@@ -45,4 +49,5 @@ if __name__ == "__main__":
     with open(output_path, "w", encoding="utf-8") as f:
         f.write(format_link_data())
 
+    # Print the number of issues saved
     print(f"{len(issues)} Issue is saved to {output_path}")

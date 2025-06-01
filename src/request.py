@@ -4,6 +4,17 @@ from src.github_api_responses import Issue
 
 
 def get_github_issues(owner, repo, token=None, label=None, per_page=100):
+    """
+    Fetches issues from a GitHub repository.
+    This function retrieves open issues from a specified GitHub repository,
+    optionally filtered by a specific label.
+    :param owner: The owner of the GitHub repository
+    :param repo: The name of the GitHub repository
+    :param token: GitHub personal access token for authentication (optional)
+    :param label: The label to filter issues by (optional)
+    :param per_page: The number of issues to retrieve per page (default is 100)
+    :return: List of Issue objects representing the issues in the repository.
+    """
     url = f"https://api.github.com/repos/{owner}/{repo}/issues"
 
     headers = {
