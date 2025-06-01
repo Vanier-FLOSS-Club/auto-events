@@ -1,4 +1,4 @@
-import re
+import json
 from datetime import datetime, timezone
 from typing import List, Optional
 
@@ -39,24 +39,31 @@ class Issue:
                 pass
         return None
 
-    def created_at(self) -> datetime:
-        # Returns the created_at date as a UTC datetime object.
-        return datetime.fromisoformat(self.created_at_raw.replace("Z", "+00:00")).astimezone(timezone.utc)
-
-    def updated_at(self) -> datetime:
-        # Returns the updated_at date as a UTC datetime object。
-        return datetime.fromisoformat(self.updated_at_raw.replace("Z", "+00:00")).astimezone(timezone.utc)
-
-    def get_due_date(self):
-        # Get the due date from the body text, if available.
-        match = re.search(r'Date:\s*(\d{4}-\d{2}-\d{2})', self.body)
-        if match:
-            return match.group(1)  # 返回字符串，也可以转成 datetime
-        return None
-
     def to_dict(self):
-        return {
-            "name": self.title,
-            "desc": self.body,
-            "time": self.get_due_date(),
-        }
+        body = self.body
+
+        start = "<!-- START -->"
+        end = "<!-- END -->"
+        json_start = "```json"
+        json_end = "```"
+
+        start_index = body.find(start)
+        end_index = body.find(end)
+
+        if start_index != -1 and end_index != -1:
+            json_start_index = body.find(json_start)
+            json_end_index = body.find(json_end, json_start_index + len(json_start))
+
+            if json_start_index != -1 and json_end_index != -1:
+                body = body[json_start_index + len(json_start):json_end_index].strip()
+                try:
+                    return json.loads(body)
+                except Exception as e:
+                    print("Failed to compile JSON:", e)
+                    return {}
+            else:
+                print("Missing JSON markers in the body.")
+        else:
+            print("Missing Start or End markers in the body.")
+
+        return {}
