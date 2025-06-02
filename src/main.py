@@ -1,6 +1,7 @@
 import json
 import os
 import shutil
+import json_to_js_converter
 
 from src.request import get_github_issues
 
@@ -39,15 +40,22 @@ if __name__ == "__main__":
         }
     ]
 
-    output_path = r"output/eventData.json"
+    # Print the number of issues saved
+    print(f"{len(issues)} Issue(s) saved")
+
+    # Convert to .mjs file
+    js_code = json_to_js_converter.json_to_js_object(format_link_data())
+
+    output_js_path = r"output/eventData.mjs"
 
     # Ensure the output directory
-    if os.path.exists(os.path.dirname(output_path)):
-        shutil.rmtree(os.path.dirname(output_path))
-    os.makedirs(os.path.dirname(output_path))
+    if os.path.exists(os.path.dirname(output_js_path)):
+        shutil.rmtree(os.path.dirname(output_js_path))
+    os.makedirs(os.path.dirname(output_js_path))
 
-    with open(output_path, "w", encoding="utf-8") as f:
-        f.write(format_link_data())
+    # Write the JavaScript code to the output file
+    with open(output_js_path, "w", encoding="utf-8") as f:
+        f.write(js_code)
 
-    # Print the number of issues saved
-    print(f"{len(issues)} Issue is saved to {output_path}")
+    # Print the output path
+    print(f"Saved to {output_js_path}")
