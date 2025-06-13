@@ -3,7 +3,7 @@ import os
 import shutil
 import json_to_js_converter
 
-from src.request import get_github_issues
+from request import get_github_issues
 
 REPO_OWNER = "Vanier-FLOSS-Club"
 REPO_NAME = "auto-events"
