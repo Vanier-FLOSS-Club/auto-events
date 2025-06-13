@@ -1,6 +1,6 @@
 import requests
 
-from src.github_api_responses import Issue
+from github_api_responses import Issue
 
 
 def get_github_issues(owner, repo, token=None, label=None, per_page=100):
