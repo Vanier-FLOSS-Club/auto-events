@@ -1,0 +1,52 @@
+name: Update Event Json
+
+on:
+    # When triggered manually
+    workflow_dispatch:
+    # When issues has modifications
+    issues:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.13'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt || true
+      
+      - name: Run script
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python src/main.py
+        
+      - name: Upload data as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: 'output'
+          path: |
+            ./output/eventData.mjs
+            
+      - name: Delete existing data branch
+        uses: dawidd6/action-delete-branch@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branches: data
+          soft_fail: true
+
+      - name: Upload new data branch
+        uses: LarchLiu/actions-save-files@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: data
+          publish_dir: output
+          destination_dir: .
