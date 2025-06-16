@@ -57,4 +57,4 @@ jobs:
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer ${{ secrets.MAIN_REPO_TOKEN }}" \
             https://api.github.com/repos/${{ vars.WEBSITE_REPO }}/dispatches \
-            -d "{\"event_type\": \"submodule-updated\", \"client_payload\": {\"submodule\": \"${{vars.SUBMODULE_PATH}}\"}}"
+            -d "{\"event_type\": \"submodule-updated\", \"client_payload\": {\"submodule\": \"${{ vars.SUBMODULE_PATH }}\"}}"
