@@ -65,7 +65,7 @@ body:
         {
           "name": "",
           "desc": "",
-          "time": ""
+          "time": "",
           "location": ""
         }
         ```
