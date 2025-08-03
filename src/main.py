@@ -5,6 +5,7 @@ import json_to_js_converter
 
 from request import get_github_issues
 
+# Please modify this part if you need to change the repository or the owner.
 REPO_OWNER = "Vanier-FLOSS-Club"
 REPO_NAME = "auto-events"
 
@@ -31,6 +32,7 @@ if __name__ == "__main__":
     type_list = sorted(type_list, key=lambda x: x.get("time", ""))
 
     # Format the data into the required structure
+    # Modify the structure if needed.
     link_data = [
         {
             "type": "events",
